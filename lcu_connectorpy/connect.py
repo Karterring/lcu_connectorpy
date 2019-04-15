@@ -37,7 +37,6 @@ class LeagueClient:
     name = "LeagueClient." + 'exe' if sys.platform.startswith('win') else 'app'
 
     def __init__(self):
-        self.name
         self.reset()
 
     def __get_process(self) -> psutil.Process:
