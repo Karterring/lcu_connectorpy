@@ -127,6 +127,7 @@ class Connector:
         self.__dict__.update(self.client.lock.load())
 
     def start(self):
+        """Start watching for the client. Blocks until found."""
         self.client.wait()
         self.__update()
 
