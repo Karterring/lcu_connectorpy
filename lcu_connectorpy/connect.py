@@ -106,6 +106,7 @@ class Connector:
         headers={'Accept': 'application/json'}
     )
     print(r.json())
+    ```
     """
 
     address = '127.0.0.1'
