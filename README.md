@@ -1,4 +1,4 @@
-# lcu-connectorpy
+# lcu_connectorpy
 A Python implementaion of [this](https://github.com/Pupix/lcu-connector) library.
 
 ## Download
