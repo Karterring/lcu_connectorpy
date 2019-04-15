@@ -7,6 +7,7 @@ authors = ["Noah <noah@coronasoftware.net>"]
 readme = "README.md"
 repository = "https://github.com/Zer0897/lcu_connectorpy"
 documentation = "https://zer0897.github.io/lcu_connectorpy/lcu_connectorpy/index.html"
+keywords = ['league-of-legends', 'api-client']
 
 
 [tool.poetry.dependencies]
