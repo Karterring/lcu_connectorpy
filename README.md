@@ -16,7 +16,7 @@ from lcu_connectorpy import Connector
 conn = Connector()
 conn.start()
 
-print(conn.url, conn.auth, sep='\n)
+print(conn.url, conn.auth, sep='\n')
 
 >>> https://127.0.0.1:18633
 >>> ("riot", "H9y4kOYVkmjWu_5mVIg1qQ")
