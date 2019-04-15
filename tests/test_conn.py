@@ -6,4 +6,3 @@ def test_client():
     conn.start()
 
     assert conn.connected
-

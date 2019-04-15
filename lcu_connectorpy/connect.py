@@ -78,6 +78,9 @@ class FileSentry(events.FileSystemEventHandler):
         self.observer = Observer()
         self.observer.schedule(self, self.path.parent)
 
+    def __del__(self):
+        self.observer.stop()
+
     def on_any_event(self, event):
         if Path(event.src_path) == self.path:
             self.callback()
