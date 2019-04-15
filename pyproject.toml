@@ -3,6 +3,9 @@ name = "lcu-connectorpy"
 version = "0.1.0"
 description = ""
 authors = ["Noah <noah@coronasoftware.net>"]
+packages = [
+    { include = "src" }
+]
 
 [tool.poetry.dependencies]
 python = "^3.7"

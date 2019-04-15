@@ -7,6 +7,7 @@ from watchdog.observers import Observer
 
 
 class Lock:
+    """Parses the data in the lock file and formats the result"""
 
     def __init__(self, path: Path):
         self.path = path
@@ -19,6 +20,7 @@ class Lock:
         }
 
     def load(self) -> dict:
+        """Load the lock file, store the results, and return the stored data"""
         if self.path.exists():
             data = self.path.read_text().split(':')
             self.data = {k: v for k, v in zip(self.data, data)}
@@ -29,6 +31,8 @@ class Lock:
 
 
 class LeagueClient:
+    """Handles locating the executable and lock file. Platform independent."""
+
     name = "LeagueClient"
 
     def __init__(self):
@@ -49,10 +53,12 @@ class LeagueClient:
                 return Lock(Path(file.path))
 
     def reset(self):
+        """Look for the process and lock file again"""
         self.process = self.__get_process()
         self.lock = self.__get_lock()
 
     def wait(self):
+        """Block until a process and lock file have been found"""
         while not self.ready:
             self.reset()
             time.sleep(1)
@@ -63,6 +69,18 @@ class LeagueClient:
 
 
 class Connector(events.FileSystemEventHandler):
+    """
+    The manager for connecting to the League Client.
+
+    example::
+
+    ```
+    from lcu_connectorpy
+
+    conn = Connector()
+
+    """
+
     address = '127.0.0.1'
     username = 'riot'
 
