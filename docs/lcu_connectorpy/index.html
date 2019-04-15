@@ -26,7 +26,7 @@
 
 __all__ = [&#39;Connector&#39;]
 
-__version__ = &#39;0.1.0&#39;</code></pre>
+__version__ = &#39;1.0.0&#39;</code></pre>
 </details>
 </section>
 <section>
@@ -106,6 +106,7 @@ print(r.json())
         self.__dict__.update(self.client.lock.load())
 
     def start(self):
+        &#34;&#34;&#34;Start watching for the client. Blocks until found.&#34;&#34;&#34;
         self.client.wait()
         self.__update()
 
@@ -210,10 +211,11 @@ See help(type(self)) for accurate signature.</p></section>
 <span>def <span class="ident">start</span></span>(<span>self)</span>
 </code></dt>
 <dd>
-<section class="desc"></section>
+<section class="desc"><p>Start watching for the client. Blocks until found.</p></section>
 <details class="source">
 <summary>Source code</summary>
 <pre><code class="python">def start(self):
+    &#34;&#34;&#34;Start watching for the client. Blocks until found.&#34;&#34;&#34;
     self.client.wait()
     self.__update()
 
