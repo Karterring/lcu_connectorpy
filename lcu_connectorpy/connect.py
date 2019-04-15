@@ -90,4 +90,6 @@ class Connector(events.FileSystemEventHandler):
 
     def on_any_event(self, event):
         if self.__is_lock_event(event):
+            self.client.lock.reset()
+            self.client.lock.wait()
             self.__update()
