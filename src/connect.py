@@ -34,10 +34,10 @@ class Lock:
 class LeagueClient:
     """Handles locating the executable and lock file. Platform independent."""
 
-    name = "LeagueClient"
+    name = "LeagueClient." + 'exe' if sys.platform.startswith('win') else 'app'
 
     def __init__(self):
-        self.name += '.exe' if sys.platform.startswith('win') else '.app'
+        self.name
         self.reset()
 
     def __get_process(self) -> psutil.Process:
