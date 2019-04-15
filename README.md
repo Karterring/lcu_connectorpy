@@ -21,3 +21,5 @@ print(conn.url, conn.auth, sep='\n)
 >>> https://127.0.0.1:18633
 >>> ("riot", "H9y4kOYVkmjWu_5mVIg1qQ")
 ```
+
+See the [docs](https://zer0897.github.io/lcu_connectorpy/lcu_connectorpy/index.html) for more.
