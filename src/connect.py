@@ -4,6 +4,7 @@ import time
 from pathlib import Path
 from watchdog import events
 from watchdog.observers import Observer
+from typing import Tuple, Callable, Optional
 
 
 class Lock:
@@ -68,17 +69,43 @@ class LeagueClient:
         return bool(self.process and self.lock)
 
 
-class Connector(events.FileSystemEventHandler):
+class FileSentry(events.FileSystemEventHandler):
+
+    def __init__(self, path: Path, callback: Callable):
+        super().__init__()
+
+        self.path = path
+        self.callback = callback
+        self.observer = Observer()
+        self.observer.schedule(self, self.path.parent)
+
+    def on_any_event(self, event):
+        if Path(event.src_path) == self.path:
+            self.callback()
+
+    def start(self):
+        self.observer.start()
+
+
+class Connector:
     """
-    The manager for connecting to the League Client.
+    Manager for getting info required to connect to the League Client.
 
     example::
 
     ```
-    from lcu_connectorpy
+    import requests
+    from lcu_connectorpy import Connector
 
     conn = Connector()
+    conn.start()
 
+    r = requests.get(
+        f'{conn.url}/Help',
+        auth=conn.auth,
+        headers={'Accept': 'application/json'}
+    )
+    print(r.json())
     """
 
     address = '127.0.0.1'
@@ -88,13 +115,7 @@ class Connector(events.FileSystemEventHandler):
         super().__init__(*args, **kwds)
 
         self.client = LeagueClient()
-        self.observer = Observer()
-
-    def __is_lock_event(self, event: events.FileSystemEvent):
-        return all((
-            not event.is_directory,
-            Path(event.src_path) == self.client.lock.path
-        ))
+        self.sentry: Optional[FileSentry] = None
 
     def __update(self):
         self.__dict__.update(self.client.lock.load())
@@ -103,11 +124,16 @@ class Connector(events.FileSystemEventHandler):
         self.client.wait()
         self.__update()
 
-        self.observer.schedule(self, str(self.client.lock.path.parent))
-        self.observer.start()
+        self.sentry = FileSentry(self.client.lock.path, self.__update)
 
-    def on_any_event(self, event):
-        if self.__is_lock_event(event):
-            self.client.lock.reset()
-            self.client.lock.wait()
-            self.__update()
+    @property
+    def connected(self):
+        return self.client.ready
+
+    @property
+    def url(self) -> str:
+        return f'{self.protocol}://{self.address}:{self.port}'
+
+    @property
+    def auth(self) -> Tuple[str]:
+        return (self.username, self.password)
