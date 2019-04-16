@@ -119,9 +119,7 @@ class Connector:
     protocol: Optional[str] = None
     id: Optional[str] = None
 
-    def __init__(self, *args, **kwds):
-        super().__init__(*args, **kwds)
-
+    def __init__(self):
         self.client = LeagueClient()
         self.sentry: Optional[FileSentry] = None
 
