@@ -61,7 +61,6 @@ class LeagueClient:
     name = &#34;LeagueClient.&#34; + &#39;exe&#39; if sys.platform.startswith(&#39;win&#39;) else &#39;app&#39;
 
     def __init__(self):
-        self.name
         self.reset()
 
     def __get_process(self) -&gt; psutil.Process:
@@ -102,6 +101,9 @@ class FileSentry(events.FileSystemEventHandler):
         self.callback = callback
         self.observer = Observer()
         self.observer.schedule(self, self.path.parent)
+
+    def __del__(self):
+        self.observer.stop()
 
     def on_any_event(self, event):
         if Path(event.src_path) == self.path:
@@ -379,6 +381,9 @@ See help(type(self)) for accurate signature.</p></section>
         self.observer = Observer()
         self.observer.schedule(self, self.path.parent)
 
+    def __del__(self):
+        self.observer.stop()
+
     def on_any_event(self, event):
         if Path(event.src_path) == self.path:
             self.callback()
@@ -447,7 +452,6 @@ The event object representing the file system event.
     name = &#34;LeagueClient.&#34; + &#39;exe&#39; if sys.platform.startswith(&#39;win&#39;) else &#39;app&#39;
 
     def __init__(self):
-        self.name
         self.reset()
 
     def __get_process(self) -&gt; psutil.Process:
@@ -509,7 +513,6 @@ See help(type(self)) for accurate signature.</p></section>
 <details class="source">
 <summary>Source code</summary>
 <pre><code class="python">def __init__(self):
-    self.name
     self.reset()</code></pre>
 </details>
 </dd>
