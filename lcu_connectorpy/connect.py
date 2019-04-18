@@ -127,15 +127,16 @@ class Connector:
         self.client = LeagueClient()
         self.sentry: Optional[FileSentry] = None
 
-    def __update(self):
-        self.__dict__.update(self.client.lock.load())
+    def update(self):
+        for k, v in self.client.lock.load():
+            setattr(self, k, v)
 
     def start(self):
         """Start watching for the client. Blocks until found."""
         self.client.wait()
-        self.__update()
+        self.update()
 
-        self.sentry = FileSentry(self.client.lock.path, self.__update)
+        self.sentry = FileSentry(self.client.lock.path, self.update)
 
     @property
     def connected(self) -> bool:
