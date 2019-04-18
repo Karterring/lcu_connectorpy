@@ -113,7 +113,6 @@ class Connector:
 
     address = '127.0.0.1'
     username = 'riot'
-    address: Optional[str] = None
     port: Optional[str] = None
     password: Optional[str] = None
     protocol: Optional[str] = None
