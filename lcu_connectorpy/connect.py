@@ -19,6 +19,7 @@ class Lock:
             'password': None,
             'protocol': None
         }
+        self.load()
 
     def load(self) -> dict:
         """Load the lock file, store the results, and return the stored data"""
@@ -29,6 +30,10 @@ class Lock:
             self.data = {k: None for k in self.data}
 
         return self.data
+
+    @property
+    def ready(self) -> bool:
+        return all(self.data.values())
 
 
 class LeagueClient:
@@ -65,7 +70,7 @@ class LeagueClient:
 
     @property
     def ready(self) -> bool:
-        return bool(self.process and self.lock)
+        return bool(self.process and self.lock and self.lock.ready)
 
 
 class FileSentry(events.FileSystemEventHandler):
