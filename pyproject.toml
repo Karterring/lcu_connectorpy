@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "lcu_connectorpy"
-version = "1.0.1"
+version = "1.0.2"
 description = "An interface for the LoL client API."
 license = "MIT"
 authors = ["Noah <noah@coronasoftware.net>"]
