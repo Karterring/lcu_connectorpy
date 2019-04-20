@@ -127,7 +127,7 @@ class Connector:
         self.sentry: Optional[FileSentry] = None
 
     def update(self):
-        if not self.connected:
+        if not self.lock:
             return
         for k, v in self.client.lock.load().items():
             setattr(self, k, v)
