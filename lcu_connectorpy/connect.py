@@ -1,4 +1,3 @@
-import sys
 import psutil
 import time
 from pathlib import Path
@@ -39,7 +38,7 @@ class Lock:
 class LeagueClient:
     """Handles locating the executable and lock file. Platform independent."""
 
-    name = "LeagueClient." + 'exe' if sys.platform.startswith('win') else 'app'
+    name = "LeagueClient." + 'exe' if psutil.WINDOWS else 'app'
 
     def __init__(self):
         self.reset()
@@ -128,6 +127,8 @@ class Connector:
         self.sentry: Optional[FileSentry] = None
 
     def update(self):
+        if not self.lock:
+            return
         for k, v in self.client.lock.load().items():
             setattr(self, k, v)
 
