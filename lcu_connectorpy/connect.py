@@ -1,9 +1,15 @@
 import psutil
 import time
+import yaml
 from pathlib import Path
 from watchdog import events
 from watchdog.observers import Observer
 from typing import Tuple, Callable, Optional
+
+
+class RestartRequiredError(Exception):
+    def __init__(self):
+        super().__init__("Please restart your League of Legends Client")
 
 
 class Lock:
@@ -52,9 +58,22 @@ class LeagueClient:
         if self.process is None:
             return
 
-        for file in self.process.open_files():
+        try:
+            files = self.process.open_files()
+        except psutil.AccessDenied as e:
+            self.__enable_swagger()
+            raise RestartRequiredError from e
+
+        for file in files:
             if file.path.endswith('lockfile'):
                 return Lock(Path(file.path))
+
+    def __enable_swagger(self):
+        yaml_fp = Path(self.process.exe()).with_name('system.yaml')
+        yl = yaml.load(yaml_fp.read_text())
+        yl['enable_swagger'] = True
+
+        yaml_fp.write_text(yaml.dump(yl))
 
     def reset(self):
         """Look for the process and lock file again"""
@@ -127,7 +146,7 @@ class Connector:
         self.sentry: Optional[FileSentry] = None
 
     def update(self):
-        if not self.lock:
+        if not self.client.lock:
             return
         for k, v in self.client.lock.load().items():
             setattr(self, k, v)

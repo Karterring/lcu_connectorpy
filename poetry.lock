@@ -207,8 +207,8 @@ argh = ">=0.24.1"
 pathtools = ">=0.1.1"
 
 [metadata]
-content-hash = "11341ed67a6cdccf05f374eda312d2029cdf29c08092421658ad0ea2fe16b0c9"
-python-versions = "^3.7"
+content-hash = "9f6c78e502efdc25ea129bed64c4f99db2f50943cfb2093d01835b5516d2a368"
+python-versions = ">=3.6"
 
 [metadata.hashes]
 argh = ["a9b3aaa1904eeb78e32394cd46c6f37ac0fb4af6dc488daa58971bdc7d7fcaf3", "e9535b8c84dc9571a48999094fda7f33e63c3f1b74f3e5f3ac0105a58405bb65"]
