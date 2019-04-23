@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "lcu_connectorpy"
-version = "1.0.5"
+version = "1.0.6"
 description = "An interface for the LoL client API."
 license = "MIT"
 authors = ["Noah <noah@coronasoftware.net>"]
@@ -11,7 +11,7 @@ keywords = ['league-of-legends', 'api-client']
 
 
 [tool.poetry.dependencies]
-python = "^3.7"
+python = ">=3.6"
 watchdog = "^0.9.0"
 psutil = "^5.6"
 
